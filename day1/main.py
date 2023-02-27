@@ -1,5 +1,7 @@
 # Ctrl + ,
-print("Hello world!")
-print("My name Hai")
+print("Hello world!") # Shift + Alt + Down
+print("My name Hai") # Alt + Up
+print("Hello world!") # Ctrl + Shift + P
 # Win + .
-print("❤😍")
+print("❤😍") # Ctrl + J - open terminal
+print("Bye!")
