@@ -1,0 +1,6 @@
+n = int(input("Enter n= "))
+x = n - 21
+print("x + 10 * 3 - 9 =", n)
+print("x + 21 =", n)
+print("x =", n, "-", "21")
+print("x =", x)
