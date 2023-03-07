@@ -4,10 +4,10 @@ mvlist = ["Ant man3", "Chainsaw Man", "Blue Lock", "Lycoris Recoil", "Kimetsu"]
 add = input("Add movie: ")
 mvlist.append(add)
 # Prin first, last, mid position movies
-print("First movie in list:", mvlist[0])
-print("First movie in list:", mvlist[-1])
+print("First position movie in list:", mvlist[0])
+print("Last position movie in list:", mvlist[-1])
 mid = len(mvlist)
-print("Mid movie in list:", mvlist[mid//2])
+print("Mid position movie in list:", mvlist[mid//2])
 print("Movie list amount:", mid, "Movie")
 firstmv = mvlist[0]
 lastmv = mvlist[-1]
