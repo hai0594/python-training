@@ -1,7 +1,7 @@
 # Ctrl + ,
-print(1,2,3,4,5)
-print(1,2,3,4,5, sep = '$')
-print(1,2,3,4,5, end ='^^')
+print(1, 2, 3, 4, 5)
+print(1, 2, 3, 4, 5, sep='$')
+print(1, 2, 3, 4, 5, end='^^')
 print("👌😒😒😂😊")
 print("Hello everyone\nMy name is Hai\nI'm 29 year old\nNice to meet you\nThank you")
 print("""Dữ dội và dịu êm
