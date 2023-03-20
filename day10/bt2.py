@@ -8,10 +8,12 @@ while times < 5:
     list_number.append(number)
     times += 1
 print(list_number)
+
 # Convert string list to int list
 for val in list_number:
     int_list.append(int(val))
 print(int_list)
+
 # Use comprehension to multi each number in list by 2
 x2 = [x*2 for x in int_list]
 print(x2)

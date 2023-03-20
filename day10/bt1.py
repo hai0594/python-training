@@ -15,3 +15,7 @@ print("Even:",len(Even))
 
 Odd = [odd for odd in list(range(1000)) if odd % 2 != 0]
 print("Odd:",len(Odd))
+
+Numbers = ["Even" if even % 2 == 0 else "Odd" for even in list(range(1000))]
+print(f"Even number: {Numbers.count('Even')}")
+print(f"Odd number: {Numbers.count('Odd')}")

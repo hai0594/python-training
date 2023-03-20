@@ -12,7 +12,7 @@ max_key = max({k for k,v in people.items() if v == max_value})
 print(max_key,max_value)
 
 # solution 2
-kv = ({k:v for k,v in people.items() if v == max_value})
+kv = ({k:v for k,v in people.items() if v == max(people.values())})
 print(kv)
 
 # Creating a new dictionary called people_x2. It is taking the values from the people dictionary and
