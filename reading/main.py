@@ -1,13 +1,7 @@
+import msvcrt
 import csv
-"""
-This is a Python program that allows the user to perform CRUD operations on a SQLite database of
-books, with additional functionality to import and export data from CSV files.
-:return: Nothing is being returned in this code. It is a program that takes user input and performs
-various operations on a SQLite database containing book information.
-    """
-import json
-import pandas as pd
 import sqlite3
+import os
 
 BOOK_COL = "book"
 BOOK_FILE = "books.csv"
@@ -20,34 +14,6 @@ def connect_sqlite_db():
         return sqlite3.connect(BOOK_SQLDB)
     except:
         print("Connection failed!")
-
-
-try:
-    sql_create = """
-    CREATE TABLE IF NOT EXISTS book (
-	title TEXT PRIMARY KEY,
-   	author TEXT ,
-	year INTEGER )"""
-
-    db_conn = connect_sqlite_db()
-    cur = db_conn.cursor()
-    cur.execute(sql_create)
-    db_conn.commit()
-    db_conn.close()
-
-except Exception:
-    pass
-
-MENU = """Welcome to the program
-1. Add new book
-2. show list books
-3. search books
-4. update book
-5. remove book
-6. read csv
-7. export to csv
-8. quit
-Your choice: """
 
 
 def enter_book_col():
@@ -85,7 +51,7 @@ def show_book_details(id, book):
     """
     The function `show_book_details` takes in an `id` and a `book` dictionary and prints out the details
     of the book.
-    
+
     :param id: The unique identifier for the book
     :param book: The book parameter is a dictionary that contains information about a book, including
     its title, author, year of publication, price, and rating
@@ -131,13 +97,11 @@ def search_book():
         print(e)
 
 
-
 def update_book():
     """
     This function updates a book's information in a SQLite database based on the user's input of the
     book title.
     """
-
 
     try:
         search_title = input("Enter the book title: ")
@@ -157,7 +121,6 @@ def remove_book():
     This function removes a book from a SQLite database based on the user inputted book title.
     """
 
-
     try:
         search_title = input("Enter the book title: ")
         book_col = connect_sqlite_db()
@@ -169,12 +132,12 @@ def remove_book():
     except Exception as e:
         print(e)
 
-
     """
     This function reads data from a CSV file and inserts it into a SQLite database.
     """
-def read_csv():
 
+
+def read_csv():
 
     try:
         db_col = connect_sqlite_db()
@@ -197,27 +160,58 @@ def export():
     """
     This function exports data from a SQLite database table to a CSV file.
     """
+    try:
+        db_col = connect_sqlite_db()
+        cur = db_col.cursor()
+        cur.execute('select * from book')
+        new_name = input('Enter file name: ')
+        os.rename(BOOK_EXPORT,new_name)
+        with open(BOOK_EXPORT, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([i[0] for i in cur.description])
+            writer.writerows(cur)
+        db_col.close()
+    except Exception as e:
+        print(e)
 
-    db_col = connect_sqlite_db()
-    cur = db_col.cursor()
-    cur.execute('select * from book')
 
-    with open(BOOK_EXPORT, 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([i[0] for i in cur.description])
-        writer.writerows(cur)
-    db_col.close()
+options = ['Add new book', 'show list books', 'find books',
+           'update book', 'remove book', 'read csv', 'export to csv', 'Exit']
+functions = (add_book, get_all_book, search_book, update_book, remove_book,
+             read_csv, export)
 
 
-choice = int(input(MENU))
+while True:
+    selected_option_index = 0
 
-operations = (add_book, get_all_book, search_book, update_book, remove_book,
-              read_csv, export)
+    while True:
+        # Print menu options
+        for i, option in enumerate(options):
+            if i == selected_option_index:
+                print(f"> {option}")
+            else:
+                print(f"  {option}")
 
-while choice != 8:
-    if choice in range(1, len(operations) + 1):
-        operations[choice - 1]()
-    else:
-        print("Invalid choice. Please try again.")
-    print()
-    choice = int(input(MENU))
+        # Wait for key press
+        key = msvcrt.getch()
+
+        # Move selection up
+        if key == b'w' or key == b'W' or key == b'\xe0H':
+            selected_option_index = (selected_option_index - 1) % len(options)
+
+        # Move selection down
+        elif key == b's' or key == b'S' or key == b'\xe0P':
+            selected_option_index = (selected_option_index + 1) % len(options)
+
+        # Select option
+        elif key == b'\r':
+            if selected_option_index == len(options) - 1:
+                print("Exiting...\n")
+                break
+            else:
+                print("\n")
+                functions[selected_option_index]()
+                print("\n")
+                break
+    if selected_option_index == len(options) - 1:
+        break
