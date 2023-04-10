@@ -16,23 +16,4 @@ class dbconnect:
         self.connection.commit()
         self.connection.close()
 
-server = 'TK-HAIND\SQL2019'
-user = 'sa'
-password = '123123'
-database = 'book_store'
-table = 'book'
 
-sql_create_table = f"""
-CREATE TABLE IF NOT EXISTS {table} (
-    title TEXT NOT NULL,
-    author TEXT NOT NULL,
-    year INTEGER NOT NULL
-);"""
-
-
-def create_book_table():
-    with dbconnect(server,user,password,database) as conn:
-        with conn.cursor() as cursor:
-            cursor.execute(sql_create_table)
-
-create_book_table()
